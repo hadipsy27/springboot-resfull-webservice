@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -29,14 +30,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user.get();
+    public UserDto getUserById(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User user = optionalUser.get();
+        return UserMapper.mapToUserDto(user);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(mapUser -> UserMapper.mapToUserDto(mapUser))
+                .collect(Collectors.toList());
     }
 
     @Override

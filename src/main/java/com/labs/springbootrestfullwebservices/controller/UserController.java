@@ -28,8 +28,8 @@ public class UserController {
     * http://localhost:8080/api/users/1
     */
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long userId) {
-        final User user = userService.getUserById(userId);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userId) {
+        final UserDto user = userService.getUserById(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -37,8 +37,8 @@ public class UserController {
     * http://localhost:8080/api/users
     */
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        final List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
