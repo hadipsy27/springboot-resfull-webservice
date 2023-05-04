@@ -50,4 +50,15 @@ public class UserController {
         final User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
+    /*
+        Build Delete User REST API
+        http://localhost:8080/api/users/1
+    */
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId) {
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("User Successfully Deleted!",HttpStatus.OK);
+    }
+
 }
