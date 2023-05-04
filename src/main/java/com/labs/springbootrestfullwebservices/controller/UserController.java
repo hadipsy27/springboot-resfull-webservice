@@ -1,5 +1,6 @@
 package com.labs.springbootrestfullwebservices.controller;
 
+import com.labs.springbootrestfullwebservices.dto.UserDto;
 import com.labs.springbootrestfullwebservices.entity.User;
 import com.labs.springbootrestfullwebservices.service.UserService;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,8 @@ public class UserController {
 
     /* Build create User REST API */
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        final User saveUser = userService.createUser(user);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+        final UserDto saveUser = userService.createUser(user);
         return new ResponseEntity<>(saveUser, HttpStatus.CREATED);
 
     }

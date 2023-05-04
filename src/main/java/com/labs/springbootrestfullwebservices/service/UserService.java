@@ -1,11 +1,12 @@
 package com.labs.springbootrestfullwebservices.service;
 
+import com.labs.springbootrestfullwebservices.dto.UserDto;
 import com.labs.springbootrestfullwebservices.entity.User;
 
 import java.util.List;
 
 public interface UserService {
-    User createUser(User user);
+    UserDto createUser(UserDto user);
 
     User getUserById(Long userId);
 

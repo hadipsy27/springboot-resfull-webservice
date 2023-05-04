@@ -1,5 +1,6 @@
 package com.labs.springbootrestfullwebservices.service.impl;
 
+import com.labs.springbootrestfullwebservices.dto.UserDto;
 import com.labs.springbootrestfullwebservices.entity.User;
 import com.labs.springbootrestfullwebservices.repository.UserRepository;
 import com.labs.springbootrestfullwebservices.service.UserService;
@@ -15,8 +16,24 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserDto createUser(UserDto userDto) {
+        // Convert UserDto into User Entity
+        User user = new User(
+                userDto.getId(),
+                userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getEmail()
+        );
+
+        User save = userRepository.save(user);
+
+        // Convert User JPA to UserDto
+        final UserDto savedUserDto = new UserDto(
+                user.getId(),
+                save.getFirstName(),
+                save.getLastName(),
+                save.getEmail());
+        return savedUserDto;
     }
 
     @Override
