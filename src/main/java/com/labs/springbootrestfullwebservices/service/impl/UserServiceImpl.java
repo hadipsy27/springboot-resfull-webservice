@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         // Convert UserDto into User Entity
         //User user = UserMapper.mapToUser(userDto);
 
-        User user = modelMapper.map(userDto, User.class);
+        User user = AutoUserMapper.MAPPER.mapToUser(userDto);
 
         User savedUser = userRepository.save(user);
 
