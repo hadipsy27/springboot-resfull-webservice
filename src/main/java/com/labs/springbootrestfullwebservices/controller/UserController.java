@@ -66,6 +66,7 @@ public class UserController {
         return new ResponseEntity<>("User Successfully Deleted!",HttpStatus.OK);
     }
 
+/*
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                         WebRequest webRequest) {
@@ -77,6 +78,7 @@ public class UserController {
         );
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
+*/
 
 
 }
