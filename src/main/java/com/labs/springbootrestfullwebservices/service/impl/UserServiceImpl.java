@@ -2,6 +2,7 @@ package com.labs.springbootrestfullwebservices.service.impl;
 
 import com.labs.springbootrestfullwebservices.dto.UserDto;
 import com.labs.springbootrestfullwebservices.entity.User;
+import com.labs.springbootrestfullwebservices.exception.ResourceNotFoundException;
 import com.labs.springbootrestfullwebservices.mapper.AutoUserMapper;
 import com.labs.springbootrestfullwebservices.mapper.UserMapper;
 import com.labs.springbootrestfullwebservices.repository.UserRepository;
@@ -39,11 +40,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        User user = optionalUser.get();
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", userId)
+        );
+
         //return UserMapper.mapToUserDto(user);
         //return modelMapper.map(user, UserDto.class);
-        return AutoUserMapper.MAPPER.mapToUserDto(optionalUser.get());
+        return AutoUserMapper.MAPPER.mapToUserDto(user);
     }
 
     @Override
@@ -56,7 +59,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto user) {
-        User existingUser = userRepository.findById(user.getId()).get();
+        User existingUser = userRepository.findById(user.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", user.getId())
+        );
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
         existingUser.setEmail(user.getEmail());
@@ -68,6 +73,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", userId)
+        );
         userRepository.deleteById(userId);
     }
 }
