@@ -2,6 +2,7 @@ package com.labs.springbootrestfullwebservices.service.impl;
 
 import com.labs.springbootrestfullwebservices.dto.UserDto;
 import com.labs.springbootrestfullwebservices.entity.User;
+import com.labs.springbootrestfullwebservices.exception.EmailAlreadyExistsException;
 import com.labs.springbootrestfullwebservices.exception.ResourceNotFoundException;
 import com.labs.springbootrestfullwebservices.mapper.AutoUserMapper;
 import com.labs.springbootrestfullwebservices.mapper.UserMapper;
@@ -25,6 +26,12 @@ public class UserServiceImpl implements UserService {
     public UserDto createUser(UserDto userDto) {
         // Convert UserDto into User Entity
         //User user = UserMapper.mapToUser(userDto);
+
+        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
+
+        if (optionalUser.isPresent()) {
+            throw new EmailAlreadyExistsException("Email already exists");
+        }
 
         User user = AutoUserMapper.MAPPER.mapToUser(userDto);
 
